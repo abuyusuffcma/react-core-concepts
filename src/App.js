@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -24,6 +24,8 @@ const nayoks = ['Razzak', 'Jasim', 'Salman', 'Alamgir','Masum']
   return (
     <div className="App">
       <p>I am React Man</p>
+      <Counter></Counter>
+      <Users></Users>
 
       <ul>
         {
@@ -43,6 +45,19 @@ const nayoks = ['Razzak', 'Jasim', 'Salman', 'Alamgir','Masum']
       </ul>
     </div>
   );
+}
+
+function Counter(){
+  const [count, setCount] = useState(10);
+  
+
+  return(
+    <div>
+      <h3> Count: {count}</h3>
+      <button onClick = {()=> setCount(count - 1)}>Decrease</button>
+      <button onClick = {()=> setCount(count + 1)}>Increase</button>
+    </div>
+  )
 }
 
 function Friend(props){
@@ -82,6 +97,30 @@ function Product(props){
       <h3>{name}</h3>
       <h2> {price}</h2>
       <button style = {{backgroundColor:'white', border:'1px solid white', borderRadius: '5px', padding: '5px'}}> Shop Now</button>
+    </div>
+  )
+}
+
+function Users(){
+  const [users, setUsers] = useState([])
+
+  useEffect(()=> {
+  fetch('https://jsonplaceholder.typicode.com/users')
+  .then(response => response.json())
+  .then(data => setUsers(data))
+
+  },[])
+  return(
+    <div>
+      <h3>Dynamic Users : {users.length}</h3>
+      <ol>
+      {
+        
+         users.map(user => <li>Name : {user.name}, E-mail : {user.email}</li>)
+      
+      }
+       </ol>
+
     </div>
   )
 }
